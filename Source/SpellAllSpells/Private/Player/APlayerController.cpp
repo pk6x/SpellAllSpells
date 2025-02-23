@@ -13,12 +13,15 @@ AAPlayerController::AAPlayerController()
 void AAPlayerController::PlayerTick(const float deltaTime)
 {
 	Super::PlayerTick(deltaTime);
+
+	CursorTrace();
 }
 
 void AAPlayerController::CursorTrace()
 {
 	FHitResult cursorHit;
 	GetHitResultUnderCursor(ECC_Visibility, false, cursorHit);
+
 	if (!cursorHit.bBlockingHit)
 	{
 		return;
@@ -28,51 +31,19 @@ void AAPlayerController::CursorTrace()
 	thisActor = cursorHit.GetActor();
 
 	/*
-	 * Line trace from cursor. There are several scenarios:
-	 * A. lastActor is null && thisActor is null
-	 *    - Do nothing.
-	 * B. lastActor is null && thisActor is valid
-	 *    - Highlight thisActor
-	 * C. lastActor is valid && thisActor is null
-	 *    - Unhighlight lastActor
-	 * D. Both actors are valid but lastActor != thisActor
-	 *    - unhighlight lastActor, and highlight thisActor
-	 * E. Both actors are valid, and are the same actor
-	 *    - Do nothing
-	 */
+		 * Line trace from cursor. There are several scenarios:
+		 * A. lastActor is null && thisActor is null
+		 *    - Do nothing.
+		 * B. lastActor is null && thisActor is valid
+		 *    - Highlight thisActor
+		 * C. lastActor is valid && thisActor is null
+		 *    - Unhighlight lastActor
+		 * D. Both actors are valid but lastActor != thisActor
+		 *    - unhighlight lastActor, and highlight thisActor
+		 * E. Both actors are valid, and are the same actor
+		 *    - Do nothing
+		 */
 
-	if (lastActor == nullptr)
-	{
-		if (thisActor != nullptr)
-		{
-			thisActor->HighlightActor();
-		}
-		else
-		{
-			
-		}
-	}
-	else
-	{
-		if (thisActor == nullptr)
-		{
-			lastActor->UnHighlightActor();
-		}
-		else
-		{
-			if (lastActor != thisActor)
-			{
-				lastActor->UnHighlightActor();
-				thisActor->HighlightActor();
-			}
-			else
-			{
-				
-			}
-		}
-	}
-
-	#if 0
 	if (thisActor != lastActor)
 	{
 		if (lastActor != nullptr)
@@ -85,7 +56,6 @@ void AAPlayerController::CursorTrace()
 			thisActor->HighlightActor();
 		}
 	}
-	#endif
 }
 
 void AAPlayerController::BeginPlay()
@@ -95,7 +65,7 @@ void AAPlayerController::BeginPlay()
 	check(playerContext);
 
 	UEnhancedInputLocalPlayerSubsystem* subsystem =
-			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
+		ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
 	check(subsystem);
 	subsystem->AddMappingContext(playerContext, 0);
 
@@ -113,7 +83,7 @@ void AAPlayerController::SetupInputComponent()
 	Super::SetupInputComponent();
 
 	UEnhancedInputComponent* enhancedInputComponent =
-			CastChecked<UEnhancedInputComponent>(InputComponent);
+		CastChecked<UEnhancedInputComponent>(InputComponent);
 
 	enhancedInputComponent->BindAction(moveAction,
 	                                   ETriggerEvent::Triggered,

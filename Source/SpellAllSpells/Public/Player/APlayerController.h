@@ -2,15 +2,15 @@
 
 #pragma once
 
-#include <CoreMinimal.h>
-#include <GameFramework/PlayerController.h>
+#include "CoreMinimal.h"
+#include "GameFramework/PlayerController.h"
+#include "Interaction/EnemyInterface.h"
 
 #include "APlayerController.generated.h"
 
 struct FInputActionValue;
 class UInputMappingContext;
 class UInputAction;
-class IEnemyInterface;
 
 /**
  * 

@@ -2,12 +2,47 @@
 
 #include "Character/Enemey.h"
 
-void AEnemey::HighlightActor()
+#include "AbilitySystem/SASAttributeSet.h"
+#include "SpellAllSpells/SpellAllSpells.h"
+
+AEnemey::
+AEnemey()
 {
-	bHighlighted = true;
+	GetMesh()->SetCollisionResponseToChannel(ECC_Visibility, ECR_Block);
+
+	FCollisionQueryParams collisionParams;
+	collisionParams.AddIgnoredActor(this);
+
+	abilitySystemComponent =
+		CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
+	abilitySystemComponent->SetIsReplicated(true);
+	abilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+
+	attributeSet = CreateDefaultSubobject<USASAttributeSet>("Attributes");
 }
 
-void AEnemey::UnHighlightActor()
+void AEnemey::
+HighlightActor()
 {
-	bHighlighted = false;
+	GetMesh()->SetRenderCustomDepth(true);
+	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+
+	weapon->SetRenderCustomDepth(true);
+	weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+}
+
+void AEnemey::
+UnHighlightActor()
+{
+	GetMesh()->SetRenderCustomDepth(false);
+
+	weapon->SetRenderCustomDepth(false);
+}
+
+void AEnemey::
+BeginPlay()
+{
+	Super::BeginPlay();
+
+	abilitySystemComponent->InitAbilityActorInfo(this, this);
 }

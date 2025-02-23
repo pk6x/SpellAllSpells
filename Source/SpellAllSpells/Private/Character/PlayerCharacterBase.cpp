@@ -2,16 +2,27 @@
 
 #include "Character/PlayerCharacterBase.h"
 
-APlayerCharacterBase::APlayerCharacterBase()
+APlayerCharacterBase::
+APlayerCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
 	weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	weapon->SetupAttachment(GetMesh(), FName("WeaponHandSocket"));
 	weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+
+	FCollisionQueryParams collisionParams;
+	collisionParams.AddIgnoredActor(this);
 }
 
-void APlayerCharacterBase::BeginPlay()
+UAbilitySystemComponent* APlayerCharacterBase::
+GetAbilitySystemComponent() const
+{
+	return abilitySystemComponent;
+}
+
+void APlayerCharacterBase::
+BeginPlay()
 {
 	Super::BeginPlay();
 }

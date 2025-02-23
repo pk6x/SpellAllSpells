@@ -17,4 +17,10 @@ class SPELLALLSPELLS_API APlayerCharacter : public APlayerCharacterBase
 
 public:
 	APlayerCharacter();
+
+	virtual void PossessedBy(AController* newController) override;
+	virtual void OnRep_PlayerState() override;
+
+private:
+	void InitAbilityAndAttributeActorInfo();
 };
