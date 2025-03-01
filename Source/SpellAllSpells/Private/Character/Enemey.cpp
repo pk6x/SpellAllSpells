@@ -2,6 +2,7 @@
 
 #include "Character/Enemey.h"
 
+#include "AbilitySystem/SASAbilitySystemComponent.h"
 #include "AbilitySystem/SASAttributeSet.h"
 #include "SpellAllSpells/SpellAllSpells.h"
 
@@ -14,11 +15,11 @@ AEnemey()
 	collisionParams.AddIgnoredActor(this);
 
 	abilitySystemComponent =
-		CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
+		CreateDefaultSubobject<USASAbilitySystemComponent>("AbilitySystemComponent");
 	abilitySystemComponent->SetIsReplicated(true);
 	abilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
-	attributeSet = CreateDefaultSubobject<USASAttributeSet>("Attributes");
+	attributeSet = CreateDefaultSubobject<USASAttributeSet>("AttributeSet");
 }
 
 void AEnemey::

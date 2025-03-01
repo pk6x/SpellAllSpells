@@ -6,9 +6,9 @@
 USASAttributeSet::
 USASAttributeSet()
 {
-	Inithealth(100.f);
-	InitmaxHealth(200.f);
-	Initmana(40.f);
+	Inithealth(50.f);
+	InitmaxHealth(100.f);
+	Initmana(50.f);
 	InitmaxMana(100.f);
 }
 
@@ -45,5 +45,5 @@ OnRep_Mana(const FGameplayAttributeData& oldMana) const
 void USASAttributeSet::
 OnRep_MaxMana(const FGameplayAttributeData& oldMaxMana) const
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(USASAttributeSet, maxMana, oldMaxMana);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(USASAttributeSet, maxMana, oldMaxMana)
 }

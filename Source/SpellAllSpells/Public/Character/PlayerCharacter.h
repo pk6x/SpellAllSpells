@@ -4,6 +4,9 @@
 
 #include <CoreMinimal.h>
 #include "Character/PlayerCharacterBase.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Player/ThePlayerState.h"
+#include "UI/HUD/SASHUD.h"
 
 #include "PlayerCharacter.generated.h"
 

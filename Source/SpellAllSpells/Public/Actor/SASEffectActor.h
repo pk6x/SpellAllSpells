@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Components/SphereComponent.h"
+#include "AbilitySystemInterface.h"
 
 #include "SASEffectActor.generated.h"
 
@@ -16,26 +16,14 @@ class SPELLALLSPELLS_API ASASEffectActor : public AActor
 public:
 	ASASEffectActor();
 
-	UFUNCTION()
-	virtual void OnOverlap(UPrimitiveComponent* overlappedComponent,
-	                       AActor* otherActor,
-	                       UPrimitiveComponent* otherComp,
-	                       int32 otherBodyIndex,
-	                       bool bFromSweep,
-	                       const FHitResult& sweepResult);
-
-	virtual void EndOverlap(UPrimitiveComponent* overlappedComponent,
-	                        AActor* otherActor,
-	                        UPrimitiveComponent* otherComp,
-	                        int32 otherBodyIndex);
-
 protected:
 	virtual void BeginPlay() override;
 
-private:
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<USphereComponent> sphere;
+	UFUNCTION(BlueprintCallable)
+	void ApplyEffectToTarget(AActor* targetActor,
+	                         TSubclassOf<UGameplayEffect> gameplayEffectClass);
 
-	UPROPERTY(VisibleAnywhere)
-	TObjectPtr<UStaticMeshComponent> mesh;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Applied Effects")
+	TSubclassOf<UGameplayEffect> instantGameplayEffectClass;
+
 };

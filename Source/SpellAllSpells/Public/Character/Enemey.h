@@ -19,11 +19,11 @@ class SPELLALLSPELLS_API AEnemey : public APlayerCharacterBase, public IEnemyInt
 public:
 	AEnemey();
 
-
 	/* Enemey Interface*/
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
 	/* end of Enemy Interface*/
+
 protected:
 	virtual void BeginPlay() override;
 };

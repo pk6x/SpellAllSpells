@@ -3,12 +3,46 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystem/SASAttributeSet.h"
 #include "UObject/Object.h"
-#include "AbilitySystemComponent.h"
-#include "AttributeSet.h"
 
 #include "SASWidgetController.generated.h"
 
+class UAbilitySystemComponent;
+class UAttributeSet;
+
+USTRUCT(BlueprintType)
+struct FWidgetControllerParams
+{
+	GENERATED_BODY()
+
+	FWidgetControllerParams()
+	{
+	}
+
+	FWidgetControllerParams(APlayerController* pc,
+	                        APlayerState* ps,
+	                        UAbilitySystemComponent* asc,
+	                        UAttributeSet* as)
+		: playerController(pc),
+		  playerState(ps),
+		  abilitySystemComponent(asc),
+		  attributeSet(as)
+	{
+	}
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<APlayerController> playerController = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<APlayerState> playerState = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAbilitySystemComponent> abilitySystemComponent = nullptr;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TObjectPtr<UAttributeSet> attributeSet = nullptr;
+};
 
 /**
  * 
@@ -17,6 +51,14 @@ UCLASS()
 class SPELLALLSPELLS_API USASWidgetController : public UObject
 {
 	GENERATED_BODY()
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetWidgetControllerParams(const FWidgetControllerParams wcParams);
+
+	virtual void BroadcastInitialValues();
+
+	virtual void BindCallbacksToDependencies(); 
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category="WidgetController")

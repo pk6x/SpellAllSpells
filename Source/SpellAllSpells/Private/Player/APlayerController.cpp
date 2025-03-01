@@ -5,19 +5,22 @@
 #include "EnhancedInputSubsystems.h"
 #include "Interaction/EnemyInterface.h"
 
-AAPlayerController::AAPlayerController()
+AAPlayerController::
+AAPlayerController()
 {
 	bReplicates = true;
 }
 
-void AAPlayerController::PlayerTick(const float deltaTime)
+void AAPlayerController::
+PlayerTick(const float deltaTime)
 {
 	Super::PlayerTick(deltaTime);
 
 	CursorTrace();
 }
 
-void AAPlayerController::CursorTrace()
+void AAPlayerController::
+CursorTrace()
 {
 	FHitResult cursorHit;
 	GetHitResultUnderCursor(ECC_Visibility, false, cursorHit);
@@ -58,7 +61,8 @@ void AAPlayerController::CursorTrace()
 	}
 }
 
-void AAPlayerController::BeginPlay()
+void AAPlayerController::
+BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -66,8 +70,10 @@ void AAPlayerController::BeginPlay()
 
 	UEnhancedInputLocalPlayerSubsystem* subsystem =
 		ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	check(subsystem);
-	subsystem->AddMappingContext(playerContext, 0);
+	if (subsystem)
+	{
+		subsystem->AddMappingContext(playerContext, 0);	
+	}
 
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Type::Default;
@@ -78,7 +84,8 @@ void AAPlayerController::BeginPlay()
 	SetInputMode(inputModeData);
 }
 
-void AAPlayerController::SetupInputComponent()
+void AAPlayerController::
+SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
@@ -91,7 +98,8 @@ void AAPlayerController::SetupInputComponent()
 	                                   &AAPlayerController::Move);
 }
 
-void AAPlayerController::Move(const FInputActionValue& inputActionValue)
+void AAPlayerController::
+Move(const FInputActionValue& inputActionValue)
 {
 	const FVector2d inputAxisVector = inputActionValue.Get<FVector2d>();
 	const FRotator rotation = GetControlRotation();

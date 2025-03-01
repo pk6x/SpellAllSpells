@@ -2,8 +2,7 @@
 
 
 #include "Character/PlayerCharacter.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "Player/ThePlayerState.h"
+
 
 APlayerCharacter::
 APlayerCharacter()
@@ -44,4 +43,15 @@ InitAbilityAndAttributeActorInfo()
 	thePlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(thePlayerState, this);
 	abilitySystemComponent = thePlayerState->GetAbilitySystemComponent();
 	attributeSet = thePlayerState->GetAttributeSet();
+
+	if (APlayerController* playerController = Cast<APlayerController>(GetController()))
+	{
+		if (ASASHUD* sasHUD = Cast<ASASHUD>(playerController->GetHUD()))
+		{
+			sasHUD->InitOverlay(playerController,
+			                    thePlayerState,
+			                    abilitySystemComponent,
+			                    attributeSet);
+		}
+	}
 }

@@ -15,7 +15,8 @@ public class SpellAllSpells : ModuleRules
 				"Engine",
 				"InputCore",
 				"EnhancedInput",
-				"GameplayAbilities"
+				"GameplayAbilities",
+				"UMG"
 			}
 		);
 

@@ -3,7 +3,8 @@
 
 #include "UI/Widget/PlayerUserWidget.h"
 
-void UPlayerUserWidget::SetWidgetController(UObject* inWidgetController)
+void UPlayerUserWidget::
+SetWidgetController(UObject* inWidgetController)
 {
 	widgetController = inWidgetController;
 	WidgetControllerSet();
