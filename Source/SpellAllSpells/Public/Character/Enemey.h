@@ -20,10 +20,18 @@ public:
 	AEnemey();
 
 	/* Enemey Interface*/
-	virtual void HighlightActor() override;
-	virtual void UnHighlightActor() override;
+	virtual void
+	HighlightActor() override;
+
+	virtual void
+	UnHighlightActor() override;
+
 	/* end of Enemy Interface*/
 
 protected:
-	virtual void BeginPlay() override;
+	virtual void
+	BeginPlay() override;
+
+	virtual void
+	InitAbilityAndAttributeActorInfo() override;
 };

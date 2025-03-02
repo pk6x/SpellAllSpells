@@ -26,3 +26,8 @@ BeginPlay()
 {
 	Super::BeginPlay();
 }
+
+void APlayerCharacterBase::
+InitAbilityAndAttributeActorInfo()
+{
+}

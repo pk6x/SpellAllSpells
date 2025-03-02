@@ -20,11 +20,18 @@ class SPELLALLSPELLS_API APlayerCharacterBase : public ACharacter, public IAbili
 public:
 	APlayerCharacterBase();
 
-	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
-	UAttributeSet* GetAttributeSet() const { return attributeSet; }
-	
+	virtual UAbilitySystemComponent*
+	GetAbilitySystemComponent() const override;
+
+	UAttributeSet*
+	GetAttributeSet() const { return attributeSet; }
+
 protected:
-	virtual void BeginPlay() override;
+	virtual void
+	BeginPlay() override;
+
+	virtual void
+	InitAbilityAndAttributeActorInfo();
 
 	UPROPERTY(EditAnywhere, Category="Combat")
 	TObjectPtr<USkeletalMeshComponent> weapon;

@@ -15,7 +15,7 @@ AEnemey()
 	collisionParams.AddIgnoredActor(this);
 
 	abilitySystemComponent =
-		CreateDefaultSubobject<USASAbilitySystemComponent>("AbilitySystemComponent");
+			CreateDefaultSubobject<USASAbilitySystemComponent>("AbilitySystemComponent");
 	abilitySystemComponent->SetIsReplicated(true);
 	abilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
@@ -44,6 +44,13 @@ void AEnemey::
 BeginPlay()
 {
 	Super::BeginPlay();
+	InitAbilityAndAttributeActorInfo();
+}
 
+void AEnemey::
+InitAbilityAndAttributeActorInfo()
+{
 	abilitySystemComponent->InitAbilityActorInfo(this, this);
+
+	Cast<USASAbilitySystemComponent>(abilitySystemComponent)->AbilityActorInfoSet();
 }

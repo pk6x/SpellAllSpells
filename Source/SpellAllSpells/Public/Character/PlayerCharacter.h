@@ -4,9 +4,7 @@
 
 #include <CoreMinimal.h>
 #include "Character/PlayerCharacterBase.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "Player/ThePlayerState.h"
-#include "UI/HUD/SASHUD.h"
+
 
 #include "PlayerCharacter.generated.h"
 
@@ -21,9 +19,13 @@ class SPELLALLSPELLS_API APlayerCharacter : public APlayerCharacterBase
 public:
 	APlayerCharacter();
 
-	virtual void PossessedBy(AController* newController) override;
-	virtual void OnRep_PlayerState() override;
+	virtual void
+	PossessedBy(AController* newController) override;
+
+	virtual void
+	OnRep_PlayerState() override;
 
 private:
-	void InitAbilityAndAttributeActorInfo();
+	virtual void
+	InitAbilityAndAttributeActorInfo() override;
 };

@@ -1,4 +1,4 @@
-// Copyight pk6x.
+// Copyright pk6x.
 
 #pragma once
 
@@ -14,6 +14,42 @@
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
 
+USTRUCT()
+struct FEffectProperties
+{
+	GENERATED_BODY()
+
+	FEffectProperties()
+	{
+	}
+
+	FGameplayEffectContextHandle effectContextHandle;
+
+	UPROPERTY()
+	UAbilitySystemComponent* sourceASC = nullptr;
+
+	UPROPERTY()
+	AController* sourceController = nullptr;
+
+	UPROPERTY()
+	ACharacter* sourceCharacter = nullptr;
+
+	UPROPERTY()
+	AActor* sourceAvatarActor = nullptr;
+
+	UPROPERTY()
+	UAbilitySystemComponent* targetASC = nullptr;
+
+	UPROPERTY()
+	AController* targetController = nullptr;
+
+	UPROPERTY()
+	ACharacter* targetCharacter = nullptr;
+
+	UPROPERTY()
+	AActor* targetAvatarActor = nullptr;
+};
+
 /**
  * 
  */
@@ -24,7 +60,16 @@ class SPELLALLSPELLS_API USASAttributeSet : public UAttributeSet
 
 public:
 	USASAttributeSet();
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	virtual void
+	GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	virtual void
+	PreAttributeChange(const FGameplayAttribute& attribute,
+	                   float& newValue) override;
+
+	virtual void
+	PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& data) override;
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category= "Vital Attributes")
 	FGameplayAttributeData health;
@@ -43,14 +88,23 @@ public:
 	ATTRIBUTE_ACCESSORS(USASAttributeSet, maxMana)
 
 	UFUNCTION()
-	void OnRep_Health(const FGameplayAttributeData& oldHealth) const;
+	void
+	OnRep_Health(const FGameplayAttributeData& oldHealth) const;
 
 	UFUNCTION()
-	void OnRep_MaxHealth(const FGameplayAttributeData& oldMaxHealth) const;
+	void
+	OnRep_MaxHealth(const FGameplayAttributeData& oldMaxHealth) const;
 
 	UFUNCTION()
-	void OnRep_Mana(const FGameplayAttributeData& oldMana) const;
+	void
+	OnRep_Mana(const FGameplayAttributeData& oldMana) const;
 
 	UFUNCTION()
-	void OnRep_MaxMana(const FGameplayAttributeData& oldMaxMana) const;
+	void
+	OnRep_MaxMana(const FGameplayAttributeData& oldMaxMana) const;
+
+private:
+	static void
+	SetEffectProperties(const struct FGameplayEffectModCallbackData& data,
+	                    FEffectProperties& effectProperties);
 };
